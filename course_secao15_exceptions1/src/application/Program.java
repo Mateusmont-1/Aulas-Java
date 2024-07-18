@@ -1,48 +1,40 @@
 package application;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 
-import model.entities.Reservation;
+import model.entities.Account;
 import model.exceptions.DomainException;
 
 public class Program {
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		try {
-			System.out.print("Room number: ");
+			System.out.println("Enter account data");
+			System.out.print("Number: ");
 			int number = sc.nextInt();
-			System.out.print("Check-out date (dd/MM/yyyy): ");
-			Date checkIn = sdf.parse(sc.next());
-			System.out.print("Check-in date (dd/MM/yyyy): ");
-			Date checkOut = sdf.parse(sc.next());
+			sc.nextLine();
+			System.out.print("Holder: ");
+			String holder = sc.nextLine();
+			System.out.print("Initial balance: ");
+			double balance = sc.nextDouble();
+			System.out.print("Withdraw limit: ");
+			double withdrawLimit = sc.nextDouble();
 			
-			Reservation reservation = new Reservation(number, checkIn, checkOut);
-			System.out.println("Reservatiion: " + reservation);
+			Account account = new Account(number, holder, balance, withdrawLimit);
+			
 			System.out.println();
-			System.out.println("Enter data to update the reservation:");
-			System.out.print("Check-out date (dd/MM/yyyy): ");
-			checkIn = sdf.parse(sc.next());
-			System.out.print("Check-in date (dd/MM/yyyy): ");
-			checkOut = sdf.parse(sc.next());
-			
-			reservation.updateDates(checkIn, checkOut);
-			System.out.println("Reservatiion: " + reservation);
+			System.out.print("Enter amount for withdraw: ");
+			double amount = sc.nextDouble();
+			account.withdraw(amount);
+			System.out.println("Nem balance: " + account.getBalance());
 		}
-		catch (ParseException e) {
-			System.out.println("Invalid date format!");
-		}
-		catch (DomainException e) {
-			System.out.println("Error in reservation: " + e.getMessage());
+		catch (DomainException e){
+			System.out.println("Withdraw error: " + e.getMessage());
 		}
 		catch (RuntimeException e) {
 			System.out.println("Unexpected error");

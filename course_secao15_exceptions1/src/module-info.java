@@ -4,5 +4,5 @@
 /**
  * 
  */
-module course_sercao15_exceptions1 {
+module course_secao15_ex1 {
 }
